@@ -1,0 +1,3373 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "$schema",
+    "version",
+    "scenario",
+    "specimens",
+    "probes",
+    "acquisitionUnits",
+    "motionDevices",
+    "dataEncodings",
+    "dataGroups"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "enum": [ "2.2.13" ]
+    },
+    "scenario": {
+      "type": "string",
+      "enum": [ "General Weld", "General Mapping" ]
+    },
+    "specimens": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "plateGeometry": {
+                "$ref": "#/definitions/plateGeometry"
+              },
+              "weldGeometry": {
+                "$ref": "#/definitions/weldGeometry"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pipeGeometry": {
+                "$ref": "#/definitions/pipeGeometry"
+              },
+              "weldGeometry": {
+                "$ref": "#/definitions/weldGeometry"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "barGeometry": {
+                "$ref": "#/definitions/barGeometry"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "probes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "serie": {
+                "type": "string",
+                "minLength": 1
+              },
+              "serialNumber": {
+                "type": "string",
+                "minLength": 1
+              },
+              "conventionalRound": {
+                "$ref": "#/definitions/conventionalRound"
+              },
+              "wedgeAssociation": {
+                "type": "object",
+                "properties": {
+                  "wedgeId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "mountingLocationId": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              },
+              "fluidColumn": {
+                "$ref": "#/definitions/fluidColumn"
+              }
+            },
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "oneOf": [
+                  { "required": [ "wedgeAssociation" ] },
+                  { "required": [ "fluidColumn" ] }
+                ]
+              },
+              {
+                "not": {
+                  "required": [ "wedgeAssociation", "fluidColumn" ]
+                }
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "serie": {
+                "type": "string",
+                "minLength": 1
+              },
+              "serialNumber": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phasedArrayLinear": {
+                "$ref": "#/definitions/phasedArrayLinear"
+              },
+              "wedgeAssociation": {
+                "type": "object",
+                "properties": {
+                  "wedgeId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "mountingLocationId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "orientation": {
+                    "type": "string",
+                    "enum": [ "Normal", "Reverse" ]
+                  }
+                },
+                "additionalProperties": false
+              },
+              "fluidColumn": {
+                "$ref": "#/definitions/fluidColumn"
+              }
+            },
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "oneOf": [
+                  { "required": [ "wedgeAssociation" ] },
+                  { "required": [ "fluidColumn" ] }
+                ]
+              },
+              {
+                "not": {
+                  "required": [ "wedgeAssociation", "fluidColumn" ]
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "wedges": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "serie": {
+                "type": "string",
+                "minLength": 1
+              },
+              "serialNumber": {
+                "type": "string",
+                "minLength": 1
+              },
+              "angleBeamWedge": {
+                "$ref": "#/definitions/angleBeamWedge"
+              },
+              "positioning": {
+                "$ref": "#/definitions/positioning"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "acquisitionUnits": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "omniScanX3": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "serialNumber": {
+                    "type": "string"
+                  },
+                  "acquisitionPace": {
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "focusPX": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "model": {
+                    "type": "string"
+                  },
+                  "serialNumber": {
+                    "type": "string"
+                  },
+                  "acquisitionPace": {
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "motionDevices": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "quadratureEncoder": {
+                "type": "object",
+                "properties": {
+                  "serialNumber": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "resolution": {
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "motionAxis": {
+                    "type": "string",
+                    "enum": [ "UCoordinateAxis", "VCoordinateAxis" ]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "paceBasedEncoding": {
+                "type": "object",
+                "properties": {
+                  "acquisitionUnitId": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "dataEncodings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [ "id" ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "discreteGrid": {
+                "$ref": "#/definitions/discreteGrid"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "dataGroups": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ultrasound": {
+                "type": "object",
+                "properties": {
+                  "conventionalPulseEcho": {
+                    "$ref": "#/definitions/conventionalPulseEcho"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ultrasound": {
+                "type": "object",
+                "properties": {
+                  "conventionalPitchCatch": {
+                    "$ref": "#/definitions/conventionalPitchCatch"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ultrasound": {
+                "type": "object",
+                "properties": {
+                  "tofd": {
+                    "$ref": "#/definitions/tofd"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ultrasound": {
+                "type": "object",
+                "properties": {
+                  "sectorialPulseEcho": {
+                    "$ref": "#/definitions/sectorialPulseEcho"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ultrasound": {
+                "type": "object",
+                "properties": {
+                  "linearPulseEcho": {
+                    "$ref": "#/definitions/linearPulseEcho"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ultrasound": {
+                "type": "object",
+                "properties": {
+                  "compoundPulseEcho": {
+                    "$ref": "#/definitions/compoundPulseEcho"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ultrasound": {
+                "type": "object",
+                "properties": {
+                  "fullMatrixCapture": {
+                    "$ref": "#/definitions/fullMatrixCapture"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "processes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "inputDataGroupId": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "inputProcessIds": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "analysisBeamGain": {
+                "type": "object",
+                "properties": {
+                  "gains": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "material": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "longitudinalWave": {
+          "type": "object",
+          "properties": {
+            "nominalVelocity": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "attenuationCoefficient": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "transversalVerticalWave": {
+          "type": "object",
+          "properties": {
+            "nominalVelocity": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "attenuationCoefficient": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "density": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "weldGeometry": {
+      "type": "object",
+      "properties": {
+        "weldAngle": {
+          "type": "number"
+        },
+        "material": {
+          "$ref": "#/definitions/material"
+        },
+        "bevelShape": {
+          "type": "string",
+          "enum": [ "U", "V" ]
+        },
+        "symmetry": {
+          "type": "string",
+          "enum": [ "Symmetric", "StraightLeft", "StraightRight" ]
+        },
+        "heatAffectedZoneWidth": {
+          "type": "number"
+        },
+        "offset": {
+          "type": "number"
+        },
+        "upperCap": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "lowerCap": {
+          "type": "object",
+          "properties": {
+            "width": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "fills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "angle": {
+                "type": "number"
+              },
+              "height": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "additionalItems": false
+        },
+        "hotPass": {
+          "type": "object",
+          "properties": {
+            "angle": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "land": {
+          "type": "object",
+          "properties": {
+            "height": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "root": {
+          "type": "object",
+          "properties": {
+            "angle": {
+              "type": "number"
+            },
+            "height": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "pipeGeometry": {
+      "type": "object",
+      "properties": {
+        "length": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "outerRadius": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "thickness": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "material": {
+          "$ref": "#/definitions/material"
+        },
+        "surfaces": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "enum": [ "Inside", "Outside" ]
+              }
+            }
+          },
+          "additionalItems": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "plateGeometry": {
+      "type": "object",
+      "properties": {
+        "length": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "thickness": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "width": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "material": {
+          "$ref": "#/definitions/material"
+        },
+        "surfaces": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "enum": [ "Top", "Bottom" ]
+              }
+            }
+          },
+          "additionalItems": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "barGeometry": {
+      "type": "object",
+      "properties": {
+        "length": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "diameter": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "material": {
+          "$ref": "#/definitions/material"
+        },
+        "surfaces": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "enum": [ "Outside" ]
+              }
+            }
+          },
+          "additionalItems": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "conventionalRound": {
+      "type": "object",
+      "properties": {
+        "centralFrequency": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "diameter": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "elements": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pinId": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "acquisitionUnitId": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "connectorName": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "phasedArrayLinear": {
+      "type": "object",
+      "properties": {
+        "centralFrequency": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "elements": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pinId": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "acquisitionUnitId": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "connectorName": {
+                "type": "string",
+                "minLength": 1
+              },
+              "primaryIndex": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "secondaryIndex": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "enabled": {
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "primaryAxis": {
+          "type": "object",
+          "properties": {
+            "elementGap": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "elementQuantity": {
+              "type": "number",
+              "minimum": 1
+            },
+            "elementLength": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "referencePoint": {
+              "type": "number"
+            },
+            "casingLength": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "secondaryAxis": {
+          "type": "object",
+          "properties": {
+            "elementGap": {
+              "type": "number",
+              "minimum": 0.0
+            },
+            "elementQuantity": {
+              "type": "number",
+              "minimum": 1
+            },
+            "elementLength": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "referencePoint": {
+              "type": "number"
+            },
+            "casingLength": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "angleBeamWedge": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": false
+        },
+        "height": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": false
+        },
+        "length": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": false
+        },
+        "longitudinalVelocity": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "mountingLocations": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "wedgeAngle": {
+                "type": "number"
+              },
+              "squintAngle": {
+                "type": "number"
+              },
+              "roofAngle": {
+                "type": "number"
+              },
+              "primaryOffset": {
+                "type": "number"
+              },
+              "secondaryOffset": {
+                "type": "number"
+              },
+              "tertiaryOffset": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "pocketDepth": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "positioning": {
+      "type": "object",
+      "properties": {
+        "specimenId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "surfaceId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "uCoordinateOffset": {
+          "type": "number"
+        },
+        "vCoordinateOffset": {
+          "type": "number"
+        },
+        "skewAngle": {
+          "type": "number"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fluidColumn": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "longitudinalVelocity": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "nominalHeight": {
+          "type": "number",
+          "minimum": 0.0
+        },
+        "wedgeAngle": {
+          "type": "number"
+        },
+        "squintAngle": {
+          "type": "number"
+        },
+        "roofAngle": {
+          "type": "number"
+        },
+        "primaryOffset": {
+          "type": "number"
+        },
+        "secondaryOffset": {
+          "type": "number"
+        },
+        "tertiaryOffset": {
+          "type": "number"
+        },
+        "positioning": {
+          "$ref": "#/definitions/positioning"
+        }
+      },
+      "additionalProperties": false
+    },
+    "discreteGrid": {
+      "type": "object",
+      "required": [ "specimenId", "surfaceId", "storage" ],
+      "properties": {
+        "specimenId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "surfaceId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "storage": {
+          "properties": {
+            "acquisitionDirection": {
+              "type": "string",
+              "enum": [ "Unidirectional", "Bidirectional" ]
+            },
+            "overwriteMode": {
+              "type": "string",
+              "enum": [ "Independant", "Merged" ]
+            },
+            "overwriteCriteria": {
+              "type": "string",
+              "enum": [ "Last", "Min", "Max" ]
+            },
+            "dataWrapAround": {
+              "type": "boolean"
+            },
+            "lastDataStored": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "oneLineScan": {
+          "properties": {
+            "uCoordinateAxis": {
+              "$ref": "#/definitions/coordinateAxis"
+            },
+            "vCoordinateAxis": {
+              "$ref": "#/definitions/coordinateAxis"
+            }
+          },
+          "minProperties": 1,
+          "maxProperties": 2,
+          "additionalProperties": false
+        },
+        "rasterScan": {
+          "properties": {
+            "uCoordinateAxis": {
+              "$ref": "#/definitions/coordinateAxis"
+            },
+            "vCoordinateAxis": {
+              "$ref": "#/definitions/coordinateAxis"
+            }
+          },
+          "anyOf": [
+            { "required": [ "uCoordinateAxis" ] },
+            { "required": [ "vCoordinateAxis" ] }
+          ],
+          "minProperties": 2,
+          "maxProperties": 2,
+          "additionalProperties": false
+        }
+      },
+      "allOf": [
+        {
+          "oneOf": [
+            { "required": [ "oneLineScan" ] },
+            { "required": [ "rasterScan" ] }
+          ]
+        },
+        {
+          "not": {
+            "required": [ "oneLineScan", "rasterScan" ]
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "coordinateAxis": {
+      "type": "object",
+      "required": [ "origin", "length", "resolution" ],
+      "properties": {
+        "motionDeviceId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "origin": {
+          "type": "number"
+        },
+        "length": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "resolution": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "conventionalPulseEcho": {
+      "type": "object",
+      "properties": {
+        "probeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "waveMode": {
+          "enum": [ "Longitudinal", "TransversalVertical" ]
+        },
+        "velocity": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "amplitudePercentAxis": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "datasets": {
+          "$ref": "#/definitions/datasets"
+        },
+        "xImagingExitPoint": {
+          "type": "number"
+        },
+        "yImagingExitPoint": {
+          "type": "number"
+        },
+        "ultrasoundAxis": {
+          "type": "object",
+          "properties": {
+            "ascanStart": { "type": "number" },
+            "ascanLength": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "ascanResolution": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "gates": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "produceCscanData": {
+                "type": "boolean"
+              },
+              "peakDetection": {
+                "type": "string",
+                "enum": [ "First", "Last", "Maximum" ]
+              },
+              "timeSelection": {
+                "type": "string",
+                "enum": [ "Peak", "Crossing" ]
+              },
+              "thresholdPolarity": {
+                "type": "string",
+                "enum": [ "Absolute", "Positive", "Negative" ]
+              },
+              "synchronization": {
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [ "Pulse", "GateRelative" ]
+                  },
+                  "triggeringEvent": {
+                    "type": "string",
+                    "enum": [ "Peak", "Crossing" ]
+                  },
+                  "gateId": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [ "mode" ],
+                "additionalProperties": false
+              },
+              "start": {
+                "type": "number"
+              },
+              "length": {
+                "type": "number",
+                "minimum": 0.0,
+                "exclusiveMinimum": true
+              },
+              "threshold": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "wedgeDelay": {
+          "type": "number",
+          "minimum": 0.0
+        },
+        "tcg": {
+          "type": "object",
+          "properties": {
+            "points": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "time": {
+                    "type": "number"
+                  },
+                  "gain": {
+                    "type": "number"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "gain": {
+          "type": "number",
+          "description": "The gain in dB"
+        },
+        "referenceAmplitude": {
+          "type": "number"
+        },
+        "referenceGain": {
+          "type": "number"
+        },
+        "pulseWidth": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulseVoltage": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulsePolarity": {
+          "type": "string",
+          "enum": [ "Bipolar", "UnipolarPositive", "UnipolarNegative" ]
+        },
+        "averagingFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digitalBandPassFilter": {
+          "type": "object",
+          "properties": {
+            "filterType": {
+              "type": "string",
+              "enum": [ "None", "LowPass", "HighPass", "BandPass" ]
+            },
+            "highCutOffFrequency": {
+              "type": "number"
+            },
+            "lowCutOffFrequency": {
+              "type": "number"
+            },
+            "characteristic": {
+              "type": "string",
+              "enum": [ "None", "TOFD" ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "ultrasoundMode": {
+          "type": "string",
+          "enum": [ "TrueDepth", "HalfPath", "FullPath", "Time" ]
+        },
+        "calibrationStates": {
+          "$ref": "#/definitions/calibrationStates"
+        },
+        "recurrence": {
+          "type": "number",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "conventionalPitchCatch": {
+      "type": "object",
+      "properties": {
+        "pulserProbeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+		    "receiverProbeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "waveMode": {
+          "enum": [ "Longitudinal", "TransversalVertical" ]
+        },
+        "velocity": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "amplitudePercentAxis": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "datasets": {
+          "$ref": "#/definitions/datasets"
+        },
+        "xImagingExitPoint": {
+          "type": "number"
+        },
+        "yImagingExitPoint": {
+          "type": "number"
+        },
+        "ultrasoundAxis": {
+          "type": "object",
+          "properties": {
+            "ascanStart": { "type": "number" },
+            "ascanLength": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "ascanResolution": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "gates": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "produceCscanData": {
+                "type": "boolean"
+              },
+              "peakDetection": {
+                "type": "string",
+                "enum": [ "First", "Last", "Maximum" ]
+              },
+              "timeSelection": {
+                "type": "string",
+                "enum": [ "Peak", "Crossing" ]
+              },
+              "thresholdPolarity": {
+                "type": "string",
+                "enum": [ "Absolute", "Positive", "Negative" ]
+              },
+              "synchronization": {
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [ "Pulse", "GateRelative" ]
+                  },
+                  "triggeringEvent": {
+                    "type": "string",
+                    "enum": [ "Peak", "Crossing" ]
+                  },
+                  "gateId": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [ "mode" ],
+                "additionalProperties": false
+              },
+              "start": {
+                "type": "number"
+              },
+              "length": {
+                "type": "number",
+                "minimum": 0.0,
+                "exclusiveMinimum": true
+              },
+              "threshold": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "wedgeDelay": {
+          "type": "number",
+          "minimum": 0.0
+        },
+        "tcg": {
+          "type": "object",
+          "properties": {
+            "points": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "properties": {
+                  "time": {
+                    "type": "number"
+                  },
+                  "gain": {
+                    "type": "number"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "gain": {
+          "type": "number",
+          "description": "The gain in dB"
+        },
+        "referenceAmplitude": {
+          "type": "number"
+        },
+        "referenceGain": {
+          "type": "number"
+        },
+        "pulseWidth": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulseVoltage": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulsePolarity": {
+          "type": "string",
+          "enum": [ "Bipolar", "UnipolarPositive", "UnipolarNegative" ]
+        },
+        "averagingFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digitalBandPassFilter": {
+          "type": "object",
+          "properties": {
+            "filterType": {
+              "type": "string",
+              "enum": [ "None", "LowPass", "HighPass", "BandPass" ]
+            },
+            "highCutOffFrequency": {
+              "type": "number"
+            },
+            "lowCutOffFrequency": {
+              "type": "number"
+            },
+            "characteristic": {
+              "type": "string",
+              "enum": [ "None", "TOFD" ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "ultrasoundMode": {
+          "type": "string",
+          "enum": [ "TrueDepth", "HalfPath", "FullPath", "Time" ]
+        },
+        "calibrationStates": {
+          "$ref": "#/definitions/calibrationStates"
+        },
+        "recurrence": {
+          "type": "number",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "tofd": {
+      "type": "object",
+      "properties": {
+        "pulserProbeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "receiverProbeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "waveMode": {
+          "enum": [ "Longitudinal", "TransversalVertical" ]
+        },
+        "velocity": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "amplitudePercentAxis": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "datasets": {
+          "$ref": "#/definitions/datasets"
+        },
+        "xImagingExitPoint": {
+          "type": "number"
+        },
+        "yImagingExitPoint": {
+          "type": "number"
+        },
+        "ultrasoundAxis": {
+          "type": "object",
+          "properties": {
+            "ascanStart": { "type": "number" },
+            "ascanLength": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            },
+            "ascanResolution": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "gates": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "produceCscanData": {
+                "type": "boolean"
+              },
+              "peakDetection": {
+                "type": "string",
+                "enum": [ "First", "Last", "Maximum" ]
+              },
+              "timeSelection": {
+                "type": "string",
+                "enum": [ "Peak", "Crossing" ]
+              },
+              "thresholdPolarity": {
+                "type": "string",
+                "enum": [ "Absolute", "Positive", "Negative" ]
+              },
+              "synchronization": {
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "enum": [ "Pulse", "GateRelative" ]
+                  },
+                  "triggeringEvent": {
+                    "type": "string",
+                    "enum": [ "Peak", "Crossing" ]
+                  },
+                  "gateId": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "required": [ "mode" ],
+                "additionalProperties": false
+              },
+              "start": {
+                "type": "number"
+              },
+              "length": {
+                "type": "number",
+                "minimum": 0.0,
+                "exclusiveMinimum": true
+              },
+              "threshold": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "wedgeDelay": {
+          "type": "number",
+          "minimum": 0.0
+        },
+        "averagingFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "gain": {
+          "type": "number",
+          "description": "The gain in dB"
+        },
+        "referenceAmplitude": {
+          "type": "number"
+        },
+        "referenceGain": {
+          "type": "number"
+        },
+        "pulseWidth": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulseVoltage": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulsePolarity": {
+          "type": "string",
+          "enum": [ "Bipolar", "UnipolarPositive", "UnipolarNegative" ]
+        },
+        "digitalBandPassFilter": {
+          "type": "object",
+          "properties": {
+            "filterType": {
+              "type": "string",
+              "enum": [ "None", "LowPass", "HighPass", "BandPass" ]
+            },
+            "highCutOffFrequency": {
+              "type": "number"
+            },
+            "lowCutOffFrequency": {
+              "type": "number"
+            },
+            "characteristic": {
+              "type": "string",
+              "enum": [ "None", "TOFD" ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "ultrasoundMode": {
+          "type": "string",
+          "enum": [ "TrueDepth", "HalfPath", "FullPath", "Time" ]
+        },
+        "calibrationStates": {
+          "$ref": "#/definitions/calibrationStates"
+        },
+        "recurrence": {
+          "type": "number",
+          "minimum": 0.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "sectorialPulseEcho": {
+      "type": "object",
+      "properties": {
+        "probeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "probeFirstElementId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "elementAperture": {
+          "type": "integer",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "beamRefractedAngles": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "number"
+            },
+            "stop": {
+              "type": "number"
+            },
+            "step": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          }
+        },
+        "waveMode": {
+          "enum": [ "Longitudinal", "TransversalVertical" ]
+        },
+        "velocity": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "focusing": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [ "TrueDepth", "HalfPath", "Unfocused", "Projection" ]
+            },
+            "distance": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "beams": {
+          "$ref": "#/definitions/beams"
+        },
+        "amplitudePercentAxis": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "datasets": {
+          "$ref": "#/definitions/datasets"
+        },
+        "gates": {
+          "$ref": "#/definitions/gates"
+        },
+        "gain": {
+          "type": "number",
+          "description": "The gain in dB"
+        },
+        "wedgeDelay": {
+          "type": "number",
+          "minimum": 0.0
+        },
+        "referenceAmplitude": {
+          "type": "number"
+        },
+        "referenceGain": {
+          "type": "number"
+        },
+        "pulseWidth": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulseVoltage": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulsePolarity": {
+          "type": "string",
+          "enum": [ "Bipolar", "UnipolarPositive", "UnipolarNegative" ]
+        },
+        "averagingFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digitalBandPassFilter": {
+          "type": "object",
+          "properties": {
+            "filterType": {
+              "type": "string",
+              "enum": [ "None", "LowPass", "HighPass", "BandPass" ]
+            },
+            "highCutOffFrequency": {
+              "type": "number"
+            },
+            "lowCutOffFrequency": {
+              "type": "number"
+            },
+            "characteristic": {
+              "type": "string",
+              "enum": [ "None", "TOFD" ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "smoothingFilter": {
+          "type": "number"
+        },
+        "ascanSynchroMode": {
+          "type": "string",
+          "enum": [ "Pulse", "SynchroGateRelative" ]
+        },
+        "rectification": {
+          "type": "string",
+          "enum": [ "None", "Positive", "Negative", "Full" ]
+        },
+        "ascanCompressionFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tcgSynchroMode": {
+          "type": "string",
+          "enum": [ "Pulse", "AscanSynchroRelative" ]
+        },
+        "ultrasoundMode": {
+          "type": "string",
+          "enum": [ "TrueDepth", "HalfPath", "FullPath", "Time" ]
+        },
+        "calibrationStates": {
+          "$ref": "#/definitions/calibrationStates"
+        }
+      },
+      "additionalProperties": false
+    },
+    "linearPulseEcho": {
+      "type": "object",
+      "properties": {
+        "probeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "probeFirstElementId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "probeLastElementId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "elementStep": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "elementAperture": {
+          "type": "integer",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "beamRefractedAngle": {
+          "type": "number"
+        },
+        "waveMode": {
+          "enum": [ "Longitudinal", "TransversalVertical" ]
+        },
+        "velocity": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "focusing": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [ "TrueDepth", "SoundPath" ]
+            },
+            "distance": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "beams": {
+          "$ref": "#/definitions/beams"
+        },
+        "amplitudePercentAxis": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "datasets": {
+          "$ref": "#/definitions/datasets"
+        },
+        "gates": {
+          "$ref": "#/definitions/gates"
+        },
+        "gain": {
+          "type": "number",
+          "description": "The gain in dB"
+        },
+        "wedgeDelay": {
+          "type": "number",
+          "minimum": 0.0
+        },
+        "referenceAmplitude": {
+          "type": "number"
+        },
+        "referenceGain": {
+          "type": "number"
+        },
+        "pulseWidth": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulseVoltage": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulsePolarity": {
+          "type": "string",
+          "enum": [ "Bipolar", "UnipolarPositive", "UnipolarNegative" ]
+        },
+        "averagingFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digitalBandPassFilter": {
+          "type": "object",
+          "properties": {
+            "filterType": {
+              "type": "string",
+              "enum": [ "None", "LowPass", "HighPass", "BandPass" ]
+            },
+            "highCutOffFrequency": {
+              "type": "number"
+            },
+            "lowCutOffFrequency": {
+              "type": "number"
+            },
+            "characteristic": {
+              "type": "string",
+              "enum": [ "None", "TOFD" ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "smoothingFilter": {
+          "type": "number"
+        },
+        "ascanSynchroMode": {
+          "type": "string",
+          "enum": [ "Pulse", "SynchroGateRelative" ]
+        },
+        "rectification": {
+          "type": "string",
+          "enum": [ "None", "Positive", "Negative", "Full" ]
+        },
+        "ascanCompressionFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tcgSynchroMode": {
+          "type": "string",
+          "enum": [ "Pulse", "AscanSynchroRelative" ]
+        },
+        "ultrasoundMode": {
+          "type": "string",
+          "enum": [ "TrueDepth", "HalfPath", "FullPath", "Time" ]
+        },
+        "calibrationStates": {
+          "$ref": "#/definitions/calibrationStates"
+        }
+      },
+      "additionalProperties": false
+    },
+    "compoundPulseEcho": {
+      "type": "object",
+      "properties": {
+        "probeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "probeFirstElementId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "probeLastElementId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "elementAperture": {
+          "type": "integer",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "beamRefractedAngles": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "number"
+            },
+            "stop": {
+              "type": "number"
+            },
+            "step": {
+              "type": "number",
+              "minimum": 0.0,
+              "exclusiveMinimum": true
+            }
+          }
+        },
+        "waveMode": {
+          "enum": [ "Longitudinal", "TransversalVertical" ]
+        },
+        "velocity": {
+          "type": "number",
+          "minimum": 0,
+          "exclusiveMinimum": true
+        },
+        "focusing": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [ "TrueDepth", "SoundPath" ]
+            },
+            "distance": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false
+        },
+        "beams": {
+          "$ref": "#/definitions/beams"
+        },
+        "amplitudePercentAxis": {
+          "type": "object",
+          "properties": {
+            "min": {
+              "type": "number"
+            },
+            "max": {
+              "type": "number"
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "min",
+            "max"
+          ]
+        },
+        "datasets": {
+          "$ref": "#/definitions/datasets"
+        },
+        "gates": {
+          "$ref": "#/definitions/gates"
+        },
+        "gain": {
+          "type": "number",
+          "description": "The gain in dB"
+        },
+        "wedgeDelay": {
+          "type": "number",
+          "minimum": 0.0
+        },
+        "referenceAmplitude": {
+          "type": "number"
+        },
+        "referenceGain": {
+          "type": "number"
+        },
+        "pulseWidth": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulseVoltage": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulsePolarity": {
+          "type": "string",
+          "enum": [ "Bipolar", "UnipolarPositive", "UnipolarNegative" ]
+        },
+        "averagingFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "digitalBandPassFilter": {
+          "type": "object",
+          "properties": {
+            "filterType": {
+              "type": "string",
+              "enum": [ "None", "LowPass", "HighPass", "BandPass" ]
+            },
+            "highCutOffFrequency": {
+              "type": "number"
+            },
+            "lowCutOffFrequency": {
+              "type": "number"
+            },
+            "characteristic": {
+              "type": "string",
+              "enum": [ "None", "TOFD" ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "smoothingFilter": {
+          "type": "number"
+        },
+        "ascanSynchroMode": {
+          "type": "string",
+          "enum": [ "Pulse", "SynchroGateRelative" ]
+        },
+        "rectification": {
+          "type": "string",
+          "enum": [ "None", "Positive", "Negative", "Full" ]
+        },
+        "ascanCompressionFactor": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "tcgSynchroMode": {
+          "type": "string",
+          "enum": [ "Pulse", "AscanSynchroRelative" ]
+        },
+        "ultrasoundMode": {
+          "type": "string",
+          "enum": [ "TrueDepth", "HalfPath", "FullPath", "Time" ]
+        },
+        "calibrationStates": {
+          "$ref": "#/definitions/calibrationStates"
+        }
+      },
+      "additionalProperties": false
+    },
+    "fullMatrixCapture": {
+      "type": "object",
+      "properties": {
+        "probeId": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "datasets": {
+          "$ref": "#/definitions/datasets"
+        },
+        "pulseWidth": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulserFrequency": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulseVoltage": {
+          "type": "number",
+          "minimum": 0.0,
+          "exclusiveMinimum": true
+        },
+        "pulsePolarity": {
+          "type": "string",
+          "enum": [ "Bipolar", "UnipolarPositive", "UnipolarNegative" ]
+        },
+        "pulsers": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "elementId": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "receivers": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "elementId": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "tfmDescription": {
+          "properties": {
+            "id": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "gain": {
+              "type": "number"
+            },
+            "referenceAmplitude": {
+              "type": "number"
+            },
+            "referenceGain": {
+              "type": "number"
+            },
+            "rectangularGrid": {
+              "type": "object",
+              "properties": {
+                "yImagingLimits": {
+                  "type": "object",
+                  "properties": {
+                    "min": { "type": "number" },
+                    "max": { "type": "number" },
+                    "resolution": { "type": "number" }
+                  },
+                  "additionalProperties": false
+                },
+                "zImagingLimits": {
+                  "type": "object",
+                  "properties": {
+                    "min": { "type": "number" },
+                    "max": { "type": "number" },
+                    "resolution": { "type": "number" }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "fmcPulserIds": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "integer" }
+            },
+            "fmcReceiverIds": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "type": "integer" }
+            },
+            "waveSets": {
+              "type": "object",
+              "properties": {
+                "pulsing": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [ "Longitudinal", "TransversalVertical" ]
+                  }
+                },
+                "receiving": {
+                  "type": "array",
+                  "minItems": 1,
+                  "uniqueItems": true,
+                  "items": {
+                    "enum": [ "Longitudinal", "TransversalVertical" ]
+                  }
+                }
+              },
+              "additionalProperties": false
+            },
+            "pathName": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "beams": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "skewAngle": {
+            "type": "number"
+          },
+          "refractedAngle": {
+            "type": "number"
+          },
+          "xImagingExitPoint": {
+            "type": "number"
+          },
+          "yImagingExitPoint": {
+            "type": "number"
+          },
+          "ultrasoundAxis": {
+            "type": "object",
+            "properties": {
+              "ascanStart": { "type": "number" },
+              "ascanLength": {
+                "type": "number",
+                "minimum": 0.0,
+                "exclusiveMinimum": true
+              },
+              "ascanResolution": {
+                "type": "number",
+                "minimum": 0.0,
+                "exclusiveMinimum": true
+              }
+            },
+            "additionalProperties": false
+          },
+          "gates": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "start": {
+                  "type": "number"
+                },
+                "length": {
+                  "type": "number",
+                  "minimum": 0.0,
+                  "exclusiveMinimum": true
+                },
+                "threshold": {
+                  "type": "number"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "beamDelay": {
+            "type": "number",
+            "minimum": 0.0
+          },
+          "gainOffset": {
+            "type": "number"
+          },
+          "recurrence": {
+            "type": "number",
+            "minimum": 0.0
+          },
+          "sumGainMode": {
+            "type": "string",
+            "enum": [ "Manual", "Automatic" ]
+          },
+          "sumGain": {
+            "type": "number"
+          },
+          "pulsers": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "elementId": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "delay": {
+                  "type": "number",
+                  "minimum": 0.0
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "receivers": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "elementId": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "delay": {
+                  "type": "number",
+                  "minimum": 0.0
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "tcg": {
+            "type": "object",
+            "properties": {
+              "points": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "time": {
+                      "type": "number"
+                    },
+                    "gain": {
+                      "type": "number"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "datasets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "ascan": {
+                "type": "object",
+                "properties": {
+                  "dataEncodingId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "amplitudeSamplingAxis": {
+                    "type": "object",
+                    "properties": {
+                      "min": { "type": "integer" },
+                      "max": { "type": "integer" },
+                      "resolution": { "type": "integer" }
+                    },
+                    "additionalProperties": false
+                  },
+                  "amplitudeDimensionOrders": {
+                    "type": "array",
+                    "minItems": 3,
+                    "maxItems": 3,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "UCoordinateAxis",
+                        "VCoordinateAxis",
+                        "BeamAxis",
+                        "UltrasoundAxis"
+                      ]
+                    }
+                  },
+                  "amplitudeDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "HasData",
+                        "Synched",
+                        "Saturated"
+                      ]
+                    }
+                  },
+                  "statusDimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "UCoordinateAxis",
+                        "VCoordinateAxis",
+                        "BeamAxis"
+                      ]
+                    }
+                  },
+                  "statusDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "cscan": {
+                "type": "object",
+                "properties": {
+                  "dataEncodingId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "gateId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "amplitudeSamplingAxis": {
+                    "type": "object",
+                    "properties": {
+                      "min": { "type": "integer" },
+                      "max": { "type": "integer" },
+                      "resolution": { "type": "integer" }
+                    },
+                    "additionalProperties": false
+                  },
+                  "dimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "UCoordinateAxis",
+                        "VCoordinateAxis",
+                        "BeamAxis"
+                      ]
+                    }
+                  },
+                  "datasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "timeReference": {
+                    "type": "string",
+                    "enum": [ "GateStart", "Absolute" ]
+                  },
+                  "timeResolution": {
+                    "type": "number",
+                    "minimum": 0.0,
+                    "exclusiveMinimum": true
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 3,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "HasData",
+                        "Synched",
+                        "Saturated",
+                        "Detected"
+                      ]
+                    }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "firingSource": {
+                "type": "object",
+                "properties": {
+                  "dataEncodingId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "dimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "UCoordinateAxis",
+                        "VCoordinateAxis",
+                        "BeamAxis"
+                      ]
+                    }
+                  },
+                  "datasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "elementaryAscan": {
+                "type": "object",
+                "properties": {
+                  "dataEncodingId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "start": {
+                    "type": "integer"
+                  },
+                  "length": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "digitizingFrequency": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "amplitudeSamplingAxis": {
+                    "type": "object",
+                    "properties": {
+                      "min": { "type": "integer" },
+                      "max": { "type": "integer" },
+                      "resolution": { "type": "integer" }
+                    },
+                    "additionalProperties": false
+                  },
+                  "amplitudeDimensionOrders": {
+                    "type": "array",
+                    "minItems": 4,
+                    "maxItems": 4,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "PrimaryMotionAxis",
+                        "PulserId",
+                        "ReceiverId",
+                        "UltrasoundAxis"
+                      ]
+                    }
+                  },
+                  "amplitudeDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "HasData",
+                        "Saturated"
+                      ]
+                    }
+                  },
+                  "statusDimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "PrimaryMotionAxis",
+                        "PulserId",
+                        "ReceiverId"
+                      ]
+                    }
+                  },
+                  "statusDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "tfm": {
+                "type": "object",
+                "properties": {
+                  "tfmDescriptionId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "dataEncodingId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "norm": {
+                    "type": "string",
+                    "enum": [ "L2" ]
+                  },
+                  "signalSource": {
+                    "type": "string",
+                    "enum": [ "Analytic", "Real" ]
+                  },
+                  "digitizingFrequency": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "valuePercentAxis": {
+                    "type": "object",
+                    "properties": {
+                      "min": {
+                        "type": "number"
+                      },
+                      "max": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "min",
+                      "max"
+                    ]
+                  },
+                  "valueDimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "PrimaryMotionAxis",
+                        "YImagingAxis",
+                        "ZImagingAxis"
+                      ]
+                    }
+                  },
+                  "valueDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "HasData",
+                        "Saturated"
+                      ]
+                    }
+                  },
+                  "statusDimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "PrimaryMotionAxis",
+                        "YImagingAxis"
+                      ]
+                    }
+                  },
+                  "statusDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "firingSourceDimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "UCoordinateAxis",
+                        "VCoordinateAxis"
+                      ]
+                    }
+                  },
+                  "firingSourceDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "pci": {
+                "type": "object",
+                "properties": {
+                  "tfmDescriptionId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "dataEncodingId": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "norm": {
+                    "type": "string",
+                    "enum": [ "L1" ]
+                  },
+                  "signalSource": {
+                    "type": "string",
+                    "enum": [ "Analytic", "Real" ]
+                  },
+                  "digitizingFrequency": {
+                    "type": "number",
+                    "minimum": 0,
+                    "exclusiveMinimum": true
+                  },
+                  "valuePercentAxis": {
+                    "type": "object",
+                    "properties": {
+                      "min": {
+                        "type": "number"
+                      },
+                      "max": {
+                        "type": "number"
+                      }
+                    },
+                    "additionalProperties": false,
+                    "required": [
+                      "min",
+                      "max"
+                    ]
+                  },
+                  "valueDimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "PrimaryMotionAxis",
+                        "YImagingAxis",
+                        "ZImagingAxis"
+                      ]
+                    }
+                  },
+                  "valueDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "statuses": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "HasData",
+                        "Saturated"
+                      ]
+                    }
+                  },
+                  "statusDimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "PrimaryMotionAxis",
+                        "YImagingAxis"
+                      ]
+                    }
+                  },
+                  "statusDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "firingSourceDimensionOrders": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "uniqueItems": true,
+                    "items": {
+                      "enum": [
+                        "UCoordinateAxis",
+                        "VCoordinateAxis"
+                      ]
+                    }
+                  },
+                  "firingSourceDatasetPath": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      }
+    },
+    "gates": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "produceCscanData": {
+            "type": "boolean"
+          },
+          "geometry": {
+            "type": "string",
+            "enum": [ "SoundPath", "TrueDepth" ]
+          },
+          "peakDetection": {
+            "type": "string",
+            "enum": [ "First", "Last", "Maximum" ]
+          },
+          "timeSelection": {
+            "type": "string",
+            "enum": [ "Peak", "Crossing" ]
+          },
+          "thresholdPolarity": {
+            "type": "string",
+            "enum": [ "Absolute", "Positive", "Negative" ]
+          },
+          "synchronization": {
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [ "Pulse", "GateRelative" ]
+              },
+              "triggeringEvent": {
+                "type": "string",
+                "enum": [ "Peak", "Crossing" ]
+              },
+              "gateId": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [ "mode" ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "produceCscanData",
+          "peakDetection",
+          "timeSelection",
+          "thresholdPolarity",
+          "synchronization"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "calibrationStates": {
+      "type": "array",
+      "minItems": 7,
+      "maxItems": 7,
+      "uniqueItems": true,
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "properties": {
+              "sensitivityCalibration": {
+                "type": "object",
+                "properties": {
+                  "calibrated": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "tcgCalibration": {
+                "type": "object",
+                "properties": {
+                  "calibrated": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "velocityCalibration": {
+                "type": "object",
+                "properties": {
+                  "calibrated": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "wedgeDelayCalibration": {
+                "type": "object",
+                "properties": {
+                  "calibrated": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "dacCalibration": {
+                "type": "object",
+                "properties": {
+                  "calibrated": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "dgsCalibration": {
+                "type": "object",
+                "properties": {
+                  "calibrated": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "tofdWedgeDelayCalibration": {
+                "type": "object",
+                "properties": {
+                  "calibrated": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "additionalItems": false
+    }
+  },
+  "additionalProperties": false
+}
