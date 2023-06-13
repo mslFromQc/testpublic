@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="NDE-Format" root_dir=".\" xmlns="urn:buildscript:2.0">
+    <scmstruct>
+        <gitdir>
+            <giturl branch="master">git@srv-qc-rdgit:ondtlib/nde-format.git</giturl>
+        </gitdir>
+    </scmstruct>
+    <release name="NDE-Format" group_id="000" package_id="0000">
+        <version>
+            <method name="semver"/>
+            <versionfile>Support/version.json</versionfile>
+            <postIncHook>echo __VERSION__ > version.txt</postIncHook>
+        </version>
+        <buildcmd>
+        </buildcmd>
+        <unittestcmd>
+        </unittestcmd>
+        <components>
+            <!-- HDF5 Headers -->
+            <component group_id="903" package_id="4880" release_id="52964" filename="HDF5-1.12.1-Headers-1.0.0-Dev.10.zip">
+                <dir>
+                    <pathsrc>include</pathsrc>
+                    <pathdst>components\hdf5\include\hdf5</pathdst>
+                </dir>
+            </component>
+            <!-- HDF5 Binaries -->
+            <component group_id="903" package_id="4880" release_id="52964" filename="HDF5-1.12.1-VS2019-1.0.0-Dev.10.zip">
+                <dir>
+                    <pathsrc>lib\x64\debug</pathsrc>
+                    <pathdst>components\hdf5\lib\debug</pathdst>
+                </dir>
+                <dir>
+                    <pathsrc>lib\x64\release</pathsrc>
+                    <pathdst>components\hdf5\lib\release</pathdst>
+                </dir>
+            </component>
+			<!-- RapidJSON -->
+			<component group_id="875" package_id="5055" release_id="50666" filename="RapidJSON-1.0.0.0.zip">
+				<dir>
+					<pathsrc>.</pathsrc>
+					<pathdst>components\rapidjson\include</pathdst>
+				</dir>
+			</component>
+			<postCompHook>scripts\copy-git-files.bat</postCompHook>
+        </components>
+        <zipfile basefilename="NDE-Format" buildscriptxml="yes" doNotZip="no">
+        </zipfile>
+    </release>
+    <cfgfile version="1" />
+</project>

@@ -1,0 +1,204 @@
+{
+  "$schema": "Schema-1.0.0-draft",
+  "version": "1.0.0-Draft",
+  "scenario": "General Weld", //set of predefined conventions to keep simple things simple
+  "specimens": [ //list of all specimens
+    {
+      "id": 0,
+      "<parametric geometry Obj>": {},
+      /*standard objects (for "General Weld" scenario)
+            <plateGeometry>
+            <pipeGeometry>
+            */
+      "<parametric weld Obj>": {}
+      /*standard objects (for "General Weld" scenario)
+            <weldGeometry>
+            */
+    }
+  ],
+  "probes": [ //list of all nde probes
+    {
+      "id": 0,
+      "model": "C544-SM", //optional field
+      "serie": "ANGLE-BEAM", //optional field
+      "serialNumber": "", //optional field
+      "<probe descriptor Obj>": {},
+      /*standard objects
+            <phasedArrayLinear>
+            <conventionalRound>
+            <eddyCurrentArray>
+            ... 
+            */
+      "<positionning Obj>": {}
+      /*standard objects
+            <wedgeAssociation>
+            <positioning>
+            */
+    }
+  ],
+  "wedges": [ //list of all probe/specimen interfaces
+    {
+      "id": 0,
+      "model": "ST1-60L-IHC", //optional field
+      "serie": "TOFD", //optional field
+      "serialNumber": "", //optional field
+      "<wedge descriptor Obj>": {},
+      /*standard objects
+            <angleBeamWedge>
+            ...
+            */
+      "<positionning Obj>": {}
+      /*standard objects
+            <positioning>
+            */
+    }
+  ],
+  "dataProducers": [ //list of all entities that produces data
+    {
+      "id": 0,
+      "<dataProducer Obj>": {}
+      /*standard objects
+            <quadratureEncoder>
+            ...
+            custom objects
+            <omniscanX3>
+            ...
+            */
+    }
+  ],
+  "dataEncodings": [ //list of all possible representation of the data vs the specimen
+    {
+      "id": 0,
+      " <dataEncoding Obj>": {}
+      /*standard objects
+            <discreteGrid>
+            <rawCycle>
+            */
+    }
+  ],
+  //Option#1 to extract info from configuration > in standardized processes
+  "processes": {
+    [
+      {
+        "id": 0,
+        "<acquisition descriptor Obj>": {} // One for each sectorial scan for example
+        /*standard objects
+                <PautSectorialPulseEcho>
+                <PautSectorialPitchCatch>
+                <PautLinearPulseEcho>
+                <PautLinearPitchCath>
+                <PautLawFileImport>
+                <FMC>
+                <PWI>
+                <UtPulseEcho>
+                <UtPitchCatch>
+                ...
+                */
+      },
+      /* process list with "id" to input relationship */
+      {
+        "id": 1,
+        "inputProcessIds": [ 0 ], //list reference to input process
+        "<process Obj>": {
+        },
+        "...": "..." // process specific parameters
+      }
+      /* process objects
+            ****mandatory standard objects****
+            <saveDataset>  //link to data in the hdf5 file
+
+            ****other standard objects **** 
+            <displayDataset>  //link to data shown to user with some post-processes
+            ...
+            <digitalGain>
+            <tcg>
+            <PAUTGateDefinition>
+            ...(more and more to add in years to come)
+
+            ****example custom objects****
+            <PAUTAcquisitionDetailsOpenViewFormat>   //in this example key parameters in Evident instrument are described
+            */
+
+    ]
+  },
+  //Option#2, separate acquisition descriptor and prost proc
+  "acquisitionDescriptors": [
+    {
+      "id": 0,
+      "<acquisition descriptor Obj>": {}, // One for each sectorial scan for example
+      "<custom configuration>": {} //path or JSON section describing the details of the instrument configuration 
+    }
+  ],
+  "processes_": [
+    /* process list with "id" to input relationship */
+    {
+      "id": 0,
+      "inputAcquisitionIds": [ 0 ], //list reference to input process or input acquisition descriptor
+      "<process Obj>": {
+      },
+      "...": "..." // process specific parameters
+    },
+    {
+      "id": 1,
+      "inputProcessIds": [ 0 ], //list reference to input process or input acquisition descriptor
+      "<process Obj>": {
+      },
+      "...": "..." // process specific parameters
+    }
+    /* process objects
+            ****mandatory standard objects****
+            <saveDataset>  //link to data in the hdf5 file
+
+            ****other standard objects **** 
+            <displayDataset>  //link to data shown to user with some post-processes
+            ...
+            <digitalGain>
+            <tcg>
+            <PAUTGateDefinition>
+            ...(more and more to add in years to come)
+            */
+  ],
+  //Option#3 to extract info from configuration > in standardized processes but acquisition descriptor includes config
+  "processes__": {
+    [
+      {
+        "id": 0,
+        "<acquisition descriptor Obj>": {}, // One for each sectorial scan for example
+        "<custom configuration>": {} //path or JSON section describing the details of the instrument configuration 
+        /*standard objects
+                <PautSectorialPulseEcho>
+                <PautSectorialPitchCatch>
+                <PautLinearPulseEcho>
+                <PautLinearPitchCath>
+                <PautLawFileImport>
+                <FMC>
+                <PWI>
+                <UtPulseEcho>
+                <UtPitchCatch>
+                ...
+                */
+      },
+      /* process list with "id" to input relationship */
+      {
+        "id": 1,
+        "inputProcessIds": [ 0 ], //list reference to input process
+        "<process Obj>": {
+        },
+        "...": "..." // process specific parameters
+      }
+      /* process objects
+            ****mandatory standard objects****
+            <saveDataset>  //link to data in the hdf5 file
+
+            ****other standard objects **** 
+            <displayDataset>  //link to data shown to user with some post-processes
+            ...
+            <digitalGain>
+            <tcg>
+            <PAUTGateDefinition>
+            ...(more and more to add in years to come)
+            */
+
+    ]
+  }
+}

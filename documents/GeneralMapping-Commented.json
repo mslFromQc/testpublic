@@ -1,0 +1,608 @@
+{
+  "$schema": "Schema-1.0.0-draft",
+  "version": "1.0.0-Beta",
+  "scenario": "General Mapping",
+  "specimens": [
+    {
+      "id": 0,
+      "plateGeometry": {
+        "material": {
+          "name": "Steel, Mild",
+          "longitudinalWave": {
+            "nominalVelocity": 5890.0,
+            "attenuationCoefficient": 0.087
+          },
+          "transversalVerticalWave": {
+            "nominalVelocity": 3240.0,
+            "attenuationCoefficient": 0.174
+          },
+          "density": 7.8
+        },
+        "thickness": 0.022,
+        "length": 0.200, //(optionel)
+        "width": 0.200, // (optionel)
+        "surfaces": [
+          {
+            "id": 0,
+            "name": "Top"
+          },
+          {
+            "id": 1,
+            "name": "Bottom"
+          }
+        ]
+      } //standard <parametric Geometry Obj>
+    }
+  ],
+  "probes": [
+    {
+      "id": 0,
+      "model": "5L64-A32",
+      "serie": "A32",
+      "serialNumber": "",
+      "phasedArrayLinear": {
+        "centralFrequency": 5e6,
+        "elements": [ // 64 elements
+          {
+            "id": 0,
+            "pinId": 0,
+            "acquisitionUnitId": 0,
+            "connectorName": "PA",
+            "primaryIndex": 0,
+            "secondaryIndex": 0,
+            "enabled": true //Dead element ?
+          },
+          //...1-62
+          {
+            "id": 63,
+            "pinId": 1,
+            "acquisitionUnitId": 0,
+            "connectorName": "PA",
+            "primaryIndex": 1,
+            "secondaryIndex": 0,
+            "enabled": true
+          }
+        ],
+        "primaryAxis": {
+          "elementGap": 0.0,
+          "elementLength": 0.0005,
+          "elementQuantity": 64,
+          "referencePoint": -0.0366,
+          "casingLength": 0.04 //(optionel)
+        },
+        "secondaryAxis": {
+          "elementGap": 0.0,
+          "elementQuantity": 1,
+          "elementLength": 0.01,
+          "referencePoint": 0.0,
+          "casingLength": 0.000002 //(optionel)
+        }
+      }, //standard <probe Obj>
+      "fluidColumn": {
+        "name": "Water", //(optional)
+        //offset pour positionner le plan d'imagerie
+        "longitudinalVelocity": 1480.0,
+        "nominalThickness": 0.01, //(optionel)
+        //positionning of the imaging plane vs the probe plane
+        "wedgeAngle": 0.0,
+        "roofAngle": 0.0,
+        "squintAngle": 0.0,
+        "primaryOffset": 0.0,
+        "secondaryOffset": 0.0,
+        "tertiaryOffset": 0.01, //put the same as nominal thickness to have the imaging plane starting at the sample surface
+        //positionning of the probe vs the sample
+        "positioning": {
+          "specimenId": 0,
+          "surfaceId": 0,
+          "uCoordinateOffset": -0.082, //defined as the intersection of the z_i axis and the u,v plane
+          "vCoordinateOffset": -0.022392407385398966, //defined as the intersection of the z_i axis and the u,v plane
+          "skewAngle": 90.0
+        } //standard >wedge Obj>
+      }
+    }
+  ],
+  "acquistionUnits": [ // NDT data producers
+    {
+      "id": 0,
+      "focusPX": {
+        "name": "",
+        "model": "",
+        "serialNumber": "",
+        "acquisitionPace": 400
+      } //custom <device Obj>
+    }
+  ],
+  "motionDevices": [
+    {
+      "id": 0,
+      "quadratureEncoder": {
+        "serialNumber": "",
+        "resolution": 12.0
+      } //standard <encoder Obj>
+    },
+    {
+      "id": 1,
+      "quadratureEncoder": {
+        "serialNumber": "",
+        "resolution": 16.0
+      } //standard <encoder Obj>
+    }
+  ],
+  "dataEncodings": [
+    {
+      "id": 0,
+      "discreteGrid": {
+        "specimenId": 0,
+        "surfaceId": 0,
+        "storage": {
+          "acquisitionDirection": "Bidirectional", //Bidirectional, Unidirectional
+          "overwriteMode": "Merged", //Independant(weld), Merged - PaintBrush - Mapping(corrosion-composite)
+          "overwriteCriteria": "Last",
+          "dataWrapAround": false, //Indique que tout les datasets on été remplis, nécessaire seulement avec l'encodage en temps
+          "lastDataStored": 0 //Offset dans la premiere dimension des datasets, nécessaire seulement avec l'encodage en temps
+        },
+        "oneLineScan": {
+          "uCoordinateAxis": { //"uCoordinateAxis" or "vCoordinateAxis" depending on which axis moves
+            "motionDeviceId": 0,
+            "name": "Scan",
+            "origin": 0.0,
+            "length": 1.2,
+            "resolution": 0.001
+          },
+          "vCoordinateAxis": {
+            "name": "Index",
+            "origin": 0.0,
+            "length": 1.2,
+            "resolution": 0.001
+          }
+        }
+      }
+    },
+    {
+      "id": 1, // Example (NOT USED)
+      "discreteGrid": {
+        "specimenId": 0,
+        "surfaceId": 0,
+        "storage": {
+          "acquisitionDirection": "Bidirectional", //Bidirectional, Unidirectional
+          "overwriteMode": "Merged", //Independant(weld), Merged - PaintBrush - Mapping(corrosion-composite)
+          "overwriteCriteria": "Last"
+        },
+        "rasterScan": {
+          "uCoordinateAxis": {
+            "motionDeviceId": 0,
+            "name": "Scan",
+            "origin": 0.0,
+            "length": 1.2,
+            "resolution": 0.001
+          },
+          "vCoordinateAxis": {
+            "motionDeviceId": 1,
+            "name": "Index",
+            "origin": 0.0,
+            "length": 1.2,
+            "resolution": 0.001
+          }
+        }
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "id": 0,
+      "name": "Linear @ Zero",
+      "usage": "",
+      "ultrasound": {
+        "linearPulseEcho": {
+          "probeId": 2,
+          "probeFirstElementId": 0,
+          "probeLastElementId": 31,
+          "elementStep": 1.0,
+          "elementAperture": 16,
+          "waveMode": "transversalVerticalWave", //[Longitudinal, transversalVerticalWave]
+          "velocity": 5900.0,
+          "focusing": {
+            "mode": "TrueDepth", //[SoundPath, TrueDepth]
+            "distance": 15
+          },
+          "beams": [
+            {
+              "id": 0,
+              "skewAngle": 0.0,
+              "refractedAngle": 0.0,
+              "xImagingExitPoint": 0.000,
+              "yImagingExitPoint": 0.005,
+              "ultrasoundAxis": {
+                "ascanStart": 0.00003,
+                "ascanLength": 0.005,
+                "ascanResolution": 10e-9
+              },
+              "gates": [
+                {
+                  "id": 0,
+                  "start": 0.0,
+                  "length": 0.0,
+                  "threshold": 50.0
+                }
+              ],
+              //Optional
+              "beamDelay": 0.0005,
+              "gainOffset": 0.0,
+              "recurrence": 0.0,
+              "sumGainMode": "Manual", //[Manual, Automatic]
+              "sumGain": 8.9,
+              "pulsers": [
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                }
+              ],
+              "receivers": [
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                },
+                {
+                  "id": 0,
+                  "elementId": 0,
+                  "delay": 0
+                }
+              ],
+              "tcg": {
+                "points": [
+                  {
+                    "time": 0,
+                    "gain": 0
+                  },
+                  {
+                    "time": 0.00001766,
+                    "gain": 2
+                  },
+                  {
+                    "time": 0.000026158,
+                    "gain": 8.7
+                  },
+                  {
+                    "time": 0.000034982,
+                    "gain": 12.4
+                  }
+                ]
+              }
+            }
+            //... N Beams
+          ],
+          "gates": [
+            {
+              "id": 1,
+              "name": "Gate A",
+              "produceCscanData": true,
+              "geometry": "SoundPath", //[SoundPath, TrueDepth]
+              "peakDetection": "Maximum", //[First, Last, Maximum]
+              "timeSelection": "Peak", //[Crossing, Peak]
+              "thresholdPolarity": "Absolute", //[Absolute, Positive, Negative]
+              "synchronization": {
+                "mode": "Pulse" //[GateRelative, Pulse]
+                //"triggeringEvent": "Peak", //[Crossing, Peak]
+                //"gateId": 0
+              }
+            }
+          ],
+          "datasets": [
+            {
+              "id": 0,
+              "ascan": {
+                "dataEncodingId": 0,
+                "amplitudeSamplingAxis": {
+                  "min": 0,
+                  "max": 32767,
+                  "resolution": 1 //Required si different de 1
+                },
+                "amplitudeDimensionOrders": [ "UCoordinateAxis", "VCoordinateAxis", "UltrasoundAxis" ],
+                "amplitudeDatasetPath": "/Domain/DataGroups/0/Datasets/0/Amplitude",
+                "statuses": [ "HasData", "Synced", "Saturated" ],
+                "statusDimensionOrders": [ "UCoordinateAxis", "VCoordinateAxis" ],
+                "statusDatasetPath": "/Domain/DataGroups/0/Datasets/0/Status"
+              }
+            },
+            {
+              "id": 1,
+              "cscan": {
+                "gateId": 1,
+                "dataEncodingId": 0,
+                "dimensionOrders": [ "UCoordinateAxis", "VCoordinateAxis" ],
+                "datasetPath": "/Domain/DataGroups/0/Datasets/1/CScan",
+                "timeReference": "GateStart", //[Absolute, GateStart]
+                "timeResolution": 10e-9,
+                "amplitudeSamplingAxis": {
+                  "min": 0,
+                  "max": 32767,
+                  "resolution": 1
+                },
+                "statuses": [ "HasData", "Synced", "Saturated" ]
+              }
+            },
+            {
+              "id": 2,
+              "cscan": {
+                "gateId": 2,
+                "dataEncodingId": 0,
+                "dimensionOrders": [ "UCoordinateAxis", "VCoordinateAxis" ],
+                "datasetPath": "/Domain/DataGroups/0/Datasets/2/CScan",
+                "timeReference": "GateStart", //[Absolute, GateStart]
+                "timeResolution": 10e-9,
+                "amplitudeSamplingAxis": {
+                  "min": 0,
+                  "max": 32767,
+                  "resolution": 1
+                },
+                "statuses": [ "HasData", "Synced", "Saturated" ]
+              }
+            },
+            {
+              "id": 3,
+              "firingSource": {
+                "dataEncodingId": 0,
+                "dimensionOrders": [ "UCoordinateAxis", "VCoordinateAxis" ],
+                "datasetPath": "/Domain/DataGroups/0/Datasets/3/FiringSource"
+              }
+            }
+          ],
+          "amplitudePercentAxis": {
+            "min": 0.0,
+            "max": 100.0
+          },
+          //Optional
+          "gain": 20.1,
+          "wedgeDelay": 0,
+          "referenceAmplitude": 10,
+          "referenceGain": 14.1,
+          "pulseWidth": 0.00001,
+          "pulseVoltage": 40,
+          "pulsePolarity": "Bipolar", //UnipolarPositive ??
+          "averagingFactor": 1,
+          "rectification": "Full",
+          "ascanSynchroMode": "Pulse", //[Pulse, RelativeGateSynchro]
+          "tcgSynchroMode": "RelativeAscanSynchro", //[Pulse, RelativeAscanSynchro]
+          "ascanCompressionFactor": 1,
+          "ultrasoundMode": "TrueDepth",
+          "smoothingFilter": 5,
+          "digitalBandPassFilter": {
+            "filterType": "BandPass", //[None, LowPass, HighPass, BandPass]
+            "highCutOffFrequency": 2000000,
+            "lowCutOffFrequency": 6500000,
+            "characteristic": "None" //[None, TOFD]
+          },
+          "calibrationStates": [
+            {
+              "sensitivityCalibration": {
+                "calibrated": true
+              }
+            },
+            {
+              "timeCorrectedGainCalibration": {
+                "calibrated": true
+              }
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

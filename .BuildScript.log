@@ -1,0 +1,14 @@
+INFO: ------------------------------------------------------------------------
+INFO: BuildScript 2.0.9.9 started at 2022-10-05 21:33:20.563088 on OLY-14096
+INFO: Project Name: NDE-Format
+INFO: Root dir    : C:\Dev\nde-format
+INFO: Getting latest releases grp_id=903, pkg_id=4880
+INFO: Getting file release info for release_id=52964
+INFO: Downloading from RDForge: HDF5-1.12.1-Headers-1.0.0-Dev.10.zip
+INFO: Getting latest releases grp_id=903, pkg_id=4880
+INFO: Getting file release info for release_id=52964
+INFO: Downloading from RDForge: HDF5-1.12.1-VS2019-1.0.0-Dev.10.zip
+INFO: Getting latest releases grp_id=875, pkg_id=5055
+INFO: Getting file release info for release_id=50666
+INFO: Downloading from RDForge: RapidJSON-1.0.0.0.zip
+INFO: Done

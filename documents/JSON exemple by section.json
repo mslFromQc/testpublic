@@ -1,0 +1,237 @@
+/****  This file list all standard object definition for the .nde format****/
+
+{
+    [
+
+        /**** specimens object childrens ****/
+        {
+            "<parametric geometry Obj>": [
+                {
+                    "plateGeometry": {
+                        "<material Obj>": {},
+                        "thickness": 0.022, //distance unit
+                        "length": 0.200, //[optional] distance unit
+                        "width": 0.200 //[optional] distance unit
+                    }
+                },
+                {
+                    "pipeGeometry": {
+                        "<material Obj>": {},
+                        "thickness": 0.02, //distance unit
+                        "outerRadius": 0.04, //[optional] distance unit
+                        "lenght": 0.1 //[optional] distance unit
+                    }
+                }
+            ],
+            "<parametric weld Obj>": [
+                {
+                    "weldGeometry": {
+                        "<material Obj>": {},
+                        "bevelShape": "V",
+                        "symmetry": "symmetric",
+                        "heatAffectedZoneWidth": 0.002,
+                        "offset": 0.00225,
+                        "upperCap": {
+                            "width": 0.0052,
+                            "height": 0.001
+                        },
+                        "fills": [],
+                        "hotPass": {
+                            "angle": 0.030,
+                            "height": 0.020
+                        },
+                        "land": {
+                            "offset": 0.0,
+                            "height": 0.002
+                        },
+                        "root": {
+                            "angle": 0.0,
+                            "height": 0.0
+                        },
+                        "lowerCap": {
+                            "width": 0.0,
+                            "height": 0.0
+                        }
+                    }
+                }
+            ],
+            "<material Obj>": [
+                {
+                    "material": {
+                        "name": "Steel, Mild",
+                        "longitudinalWave": {
+                            "velocity": 5890.0,
+                            "attenuationCoefficient": 0.087
+                        },
+                        "transversalWave": {
+                            "velocity": 3240.0,
+                            "attenuationCoefficient": 0.174
+                        },
+                        "density": 7.8
+                    }
+                }
+            ]
+        },
+        /**** probes object childrens ****/
+        {
+            "<probe descriptor Obj>": [
+                {
+                    "conventionalRound": {
+                        "centralFrequency": 10e6,
+                        "diameter": 0.00635,
+                        "elements": [
+                            {
+                                "id": 0,
+                                "pinId": 0,
+                                "deviceId": 0,
+                                "connectorName": "P1"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "phasedArrayLinear": {
+                        "centralFrequency": 5e6,
+                        //"elevation": 0.01, //MXU voir les elementLenghts
+                        "elements": [ // 64 elements
+                            {
+                                "id": 0,
+                                "pinId": 0,
+                                "deviceId": 0,
+                                "connectorName": "PA",
+                                "primaryIndex": 0,
+                                "secondaryIndex": 0,
+                                "enabled": true //Dead element ?
+                            },
+                            //...1-62
+                            {
+                                "id": 63,
+                                "pinId": 1,
+                                "deviceId": 0,
+                                "connectorName": "PA",
+                                "primaryIndex": 1,
+                                "secondaryIndex": 0,
+                                "enabled": true
+                            }
+                        ],
+                        "primaryAxis": {
+                            "elementGap": 0.0,
+                            "elementLenght": 0.0005,
+                            "elementQuantity": 64,
+                            "referencePoint": -0.0366
+                            //"casingLength": 0.04 //MXU Display?
+                        },
+                        "secondaryAxis": {
+                            "elementGap": 0.0,
+                            "elementQuantity": 1,
+                            "elementLenght": 0.01,
+                            "referencePoint": 0.0
+                            //"casingLength": 0.000002 //MXU Display?
+                        }
+                    }
+                }
+            ],
+            "<positionning Obj>": [
+                {
+                    "wedgeAssociation": {
+                        "wedgeId": 2,
+                        "mountingLocationId": 0,
+                        "orientation": "Normal"
+                    }
+                },
+                {
+                    "positionning": {
+                        "specimenId": 0,
+                        "surfaceId": 0,
+                        "uCoordinateOffset": -0.082,
+                        "vCoordinateOffset": -0.022392407385398966,
+                        "skew": 90
+                    }
+                }
+            ]
+        },
+        /**** wedges object childrens ****/
+        {
+            "<wedge descriptor Obj>": [
+                {
+                    "angleBeamlWedge": {
+                        "width": 0.02131,
+                        "height": 0.0127,
+                        "lenght": 0.02131,
+                        "longitudinalVelocity": 2330.0,
+                        "mountingLocations": [
+                            {
+                                "id": 0,
+                                "angle": 60.0,
+                                "primaryOffset": -0.008,
+                                "secondaryOffset": 0.0,
+                                "tertiaryOffset": 0.0
+                            }
+                        ]
+                    }
+                }
+            ],
+            "<positionning Obj>": [
+                {
+                    "positionning": {
+                        "specimenId": 0,
+                        "surfaceId": 0,
+                        "uCoordinateOffset": -0.082,
+                        "vCoordinateOffset": -0.022392407385398966,
+                        "skew": 90
+                    }
+                }
+            ]
+        },
+        /**** dataProducers object childrens****/
+        {
+            "<dataProducer Obj>": [
+                {
+                    "quadratureEncoder": {
+                        //...
+                    }
+                }
+            ]
+        },
+        /**** dataEncoding object childrens****/
+        {
+            "<dataEncodings Obj>": [
+                {
+                    "discreteGrid": {
+                        "specimenId": 0,
+                        "surfaceId": 0,
+                        "storage": {
+                            "acquisitionDirection": "Bidirectional", //Bidirectional, Unidirectional
+                            "overwriteMode": "Independant", //Independant(weld), Merged(corrosion)
+                            "overwriteCriteria": "last"
+                        },
+                        "oneLineScan": {
+                            "primaryAxis": "U",
+                            "origin": 0.0,
+                            "length": 1.2,
+                            "resolution": 0.001
+                        }
+                    }
+                },
+                {
+                    "rawCycle": {
+                        "pace": 60
+                    }
+                }
+            ]
+        },
+        /**** processes object childrens****/
+        {
+            "<acquisition descriptor Obj>": [
+                {
+                    //...
+                }
+            ],
+            "process Obj": [
+                {
+                    //...
+                }
+            ]
+        }
+    ]
+}
